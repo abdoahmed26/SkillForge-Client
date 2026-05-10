@@ -17,13 +17,15 @@ export const setAccessToken = (accessToken: string | null) => {
   }
 };
 
+const AUTH_ENDPOINTS = ["/auth/login", "/auth/register", "/auth/refresh", "/auth/forgot-password", "/auth/reset-password"];
+
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RetryRequestConfig | undefined;
-    const isRefreshRequest = originalRequest?.url?.includes("/auth/refresh");
+    const isAuthEndpoint = AUTH_ENDPOINTS.some((ep) => originalRequest?.url?.includes(ep));
 
-    if (error.response?.status === 401 && originalRequest && !originalRequest._retry && !isRefreshRequest) {
+    if (error.response?.status === 401 && originalRequest && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true;
 
       try {
@@ -34,7 +36,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         setAccessToken(null);
         window.dispatchEvent(new Event("auth:expired"));
-        window.location.assign("/login");
+        window.location.assign("/#/login");
         return Promise.reject(refreshError);
       }
     }
