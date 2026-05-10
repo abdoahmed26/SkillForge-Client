@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense, type ReactNode } from "react";
-import { createHashRouter, Navigate } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import { LoadingSkeleton } from "../components/common/LoadingSkeleton";
 import { NotFoundPage } from "../components/common/NotFoundPage";
 import { ProtectedRoute } from "../features/auth/components/ProtectedRoute";
@@ -23,6 +23,7 @@ const MySkillsPage = lazy(() => import("../features/skills/pages/MySkillsPage").
 const AchievementsPage = lazy(() => import("../features/gamification/pages/AchievementsPage").then((module) => ({ default: module.AchievementsPage })));
 const AnalyticsDashboardPage = lazy(() => import("../features/analytics/pages/AnalyticsDashboardPage").then((module) => ({ default: module.AnalyticsDashboardPage })));
 const ChatPage = lazy(() => import("../features/chat/pages/ChatPage").then((module) => ({ default: module.ChatPage })));
+const HomePage = lazy(() => import("../features/home/pages/HomePage").then((module) => ({ default: module.HomePage })));
 
 function withRouteFallback(element: ReactNode) {
   return (
@@ -33,7 +34,7 @@ function withRouteFallback(element: ReactNode) {
 }
 
 export const router = createHashRouter([
-  { path: "/", element: <Navigate to="/login" replace /> },
+  { path: "/", element: withRouteFallback(<HomePage />) },
   {
     element: withRouteFallback(<AuthLayout />),
     children: [

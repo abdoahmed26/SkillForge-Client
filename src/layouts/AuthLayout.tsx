@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import logoIcon from "../assets/icon.png";
 
 export function AuthLayout() {
   return (
@@ -9,14 +10,11 @@ export function AuthLayout() {
         className="relative z-10 w-full max-w-md animate-[authPanelIn_360ms_ease-out] rounded-2xl glass-dark p-8 sm:p-10"
       >
         <div className="mb-8 text-center">
-          <div
-            className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-indigo-500 to-teal-400 shadow-glow"
-          >
-            <span className="text-3xl font-black text-white">S</span>
-          </div>
+          <img src={logoIcon} alt="SkillForge Logo" className="h-12 w-auto mx-auto object-contain" />
           <h1 className="text-3xl font-bold">
-            <span className="text-indigo-400">Skill</span>
-            <span className="text-teal-400">Forge</span>
+            <span className="text-3xl font-bold tracking-tight text-white">
+              Skill<span className="text-emerald-500">Forge</span>
+            </span>
           </h1>
           <p className="mt-2 text-sm text-slate-400">Unlock your potential, together.</p>
         </div>

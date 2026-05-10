@@ -11,6 +11,7 @@ import { loadGamificationProfile } from "../features/gamification/store/gamifica
 import { PageTransition } from "../components/common/PageTransition";
 import { ThemeToggle } from "../components/common/ThemeToggle";
 import { NotificationBell } from "../features/notifications/components/NotificationBell";
+import logoIcon from "../assets/icon.png";
 
 export function AppLayout() {
   const dispatch = useAppDispatch();
@@ -34,7 +35,7 @@ export function AppLayout() {
 
   const handleLogout = async () => {
     await dispatch(logoutUser());
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
   };
 
   type NavItem = {
@@ -74,12 +75,9 @@ export function AppLayout() {
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-900/95 shadow-[0_8px_32px_0_rgba(0,0,0,0.22)]">
         <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/dashboard" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 to-teal-400 text-xl font-black text-white shadow-glow">
-              S
-            </div>
-            <span className="text-xl font-bold tracking-tight">
-              <span className="text-indigo-400">Skill</span>
-              <span className="text-teal-400">Forge</span>
+            <img src={logoIcon} alt="SkillForge Logo" className="h-8 w-auto object-contain" />
+            <span className="text-2xl font-bold tracking-tight text-white">
+              Skill<span className="text-emerald-500">Forge</span>
             </span>
           </Link>
 
