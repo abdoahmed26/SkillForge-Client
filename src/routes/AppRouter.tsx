@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense, type ReactNode } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createHashRouter, Navigate } from "react-router-dom";
 import { LoadingSkeleton } from "../components/common/LoadingSkeleton";
 import { NotFoundPage } from "../components/common/NotFoundPage";
 import { ProtectedRoute } from "../features/auth/components/ProtectedRoute";
@@ -32,7 +32,7 @@ function withRouteFallback(element: ReactNode) {
   );
 }
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   { path: "/", element: <Navigate to="/login" replace /> },
   {
     element: withRouteFallback(<AuthLayout />),
