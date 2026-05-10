@@ -8,6 +8,7 @@ import {
   CancelledSessionCard,
   CancelSessionModal,
   HistorySessionCard,
+  RejectedSessionCard,
   RejectRequestModal,
   RequestCard,
   SessionCard,
@@ -24,7 +25,7 @@ import {
 } from "../store/sessionsSlice";
 import { SessionStatus, type Session } from "../types/session.types";
 
-type SessionFilter = "all" | "requests" | "upcoming" | "completed" | "missed" | "cancelled";
+type SessionFilter = "all" | "requests" | "upcoming" | "completed" | "missed" | "cancelled" | "rejected";
 
 export function MySessionsPage() {
   const dispatch = useAppDispatch();
@@ -65,11 +66,13 @@ export function MySessionsPage() {
       (session.status !== SessionStatus.COMPLETED && session.viewerOutcome === "missed"),
   );
   const cancelledSessions = history.filter((session) => session.status === SessionStatus.CANCELLED);
+  const rejectedSessions = history.filter((session) => session.status === SessionStatus.REJECTED);
   const showRequests = filter === "all" || filter === "requests";
   const showUpcoming = filter === "all" || filter === "upcoming";
   const showCompleted = filter === "all" || filter === "completed";
   const showMissed = filter === "all" || filter === "missed";
   const showCancelled = filter === "all" || filter === "cancelled";
+  const showRejected = filter === "all" || filter === "rejected";
   const filters: { value: SessionFilter; label: string; count: number }[] = [
     { value: "all", label: "All", count: requests.length + sortedUpcoming.length + history.length },
     { value: "requests", label: "Requests", count: requests.length },
@@ -77,6 +80,7 @@ export function MySessionsPage() {
     { value: "completed", label: "Completed", count: completedSessions.length },
     { value: "missed", label: "Missed", count: missedSessions.length },
     { value: "cancelled", label: "Cancelled", count: cancelledSessions.length },
+    { value: "rejected", label: "Rejected", count: rejectedSessions.length },
   ];
 
   const handleAccept = async (id: string) => {
@@ -199,7 +203,7 @@ export function MySessionsPage() {
               <p className="mt-2 text-sm text-slate-400">Send a booking request to one of your matches.</p>
               <Link
                 to="/my-matches"
-                className="mt-5 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-5 py-3 text-sm font-bold text-white shadow-glow transition-all hover:opacity-90"
+                className="mt-5 inline-flex items-center justify-center rounded-xl, bg-gradient-to-r from-indigo-500 to-teal-400 px-5 py-3 text-sm font-bold text-white shadow-glow transition-all hover:opacity-90"
               >
                 View Matches
               </Link>
@@ -287,6 +291,28 @@ export function MySessionsPage() {
             <div className="space-y-4">
               {cancelledSessions.map((session) => (
                 <CancelledSessionCard key={session.id} session={session} />
+              ))}
+            </div>
+          )}
+        </>
+      ) : null}
+
+      {showRejected ? (
+        <>
+          <div className="mb-4 mt-8 flex items-center justify-between gap-3">
+            <h2 className="font-heading text-2xl font-bold text-white">Rejected Sessions</h2>
+          </div>
+
+          {isHistoryLoading ? (
+            <div className="h-32 animate-pulse rounded-lg bg-slate-800/60" />
+          ) : rejectedSessions.length === 0 ? (
+            <div className="glass-dark rounded-lg p-5 text-sm font-semibold text-slate-400">
+              No rejected sessions.
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {rejectedSessions.map((session) => (
+                <RejectedSessionCard key={session.id} session={session} />
               ))}
             </div>
           )}

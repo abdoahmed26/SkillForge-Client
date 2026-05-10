@@ -418,6 +418,7 @@ const sessionsSlice = createSlice({
       })
       .addCase(rejectRequest.fulfilled, (state, action) => {
         state.requests = state.requests.filter((request) => request.id !== action.payload.id);
+        state.history = [action.payload, ...state.history.filter((session) => session.id !== action.payload.id)];
       })
       .addCase(rejectRequest.rejected, (state, action) => {
         state.error = action.payload ?? "Unable to reject request";

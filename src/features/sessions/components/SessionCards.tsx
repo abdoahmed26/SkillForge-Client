@@ -7,7 +7,7 @@ import { ReviewForm } from "../../reviews/components/ReviewForm";
 import { formatDateTime, getCountdown } from "../utils/sessionDate";
 import { SessionStatus, type Session } from "../types/session.types";
 
-type SessionFilter = "all" | "requests" | "upcoming" | "completed" | "missed" | "cancelled";
+type SessionFilter = "all" | "requests" | "upcoming" | "completed" | "missed" | "cancelled" | "rejected";
 
 function ParticipantAvatar({ avatarUrl, name }: { avatarUrl: string | null; name: string }) {
   if (avatarUrl) {
@@ -442,6 +442,42 @@ export function CancelledSessionCard({ session }: { session: Session }) {
       {session.cancellationComment ? (
         <p className="relative mt-4 rounded-lg border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-100">
           {session.cancellationComment}
+        </p>
+      ) : null}
+    </motion.article>
+  );
+}
+
+export function RejectedSessionCard({ session }: { session: Session }) {
+  const name = session.otherUser.displayName || session.otherUser.username;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="glass-dark relative overflow-hidden rounded-lg p-5"
+    >
+      <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/10 blur-3xl" />
+      <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex items-center gap-3">
+          {/* <ParticipantAvatar avatarUrl={session.otherUser.avatarUrl} name={name} /> */}
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="font-heading text-lg font-bold text-white">{session.skill.name}</h2>
+              <span className="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-200 absolute top-0 right-0">
+                Rejected
+              </span>
+            </div>
+            <p className="mt-1 text-sm text-slate-400">with {name}</p>
+            <div className="mt-2">
+              <SessionDateLine scheduledAt={session.scheduledAt} />
+            </div>
+          </div>
+        </div>
+      </div>
+      {session.rejectionComment ? (
+        <p className="relative mt-4 rounded-lg border border-orange-400/20 bg-orange-500/10 px-4 py-3 text-sm font-semibold text-orange-100">
+          {session.rejectionComment}
         </p>
       ) : null}
     </motion.article>
