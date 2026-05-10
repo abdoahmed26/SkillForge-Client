@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { io } from "socket.io-client";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
+import { useAppDispatch } from "../../../hooks/useAppHooks";
+import { getAccessToken } from "../../../utils/cookies";
 import { messageReceived, messageUpdated, reactionAdded, reactionRemoved, userOnlineChanged, userStoppedTyping, userTyping } from "../store/chatSlice";
 import type { Message } from "../types/chat.types";
 
@@ -8,7 +9,7 @@ const socketUrl = import.meta.env.VITE_SOCKET_URL ?? "http://localhost:3000";
 
 export function useChatSocket() {
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.accessToken);
+  const token = getAccessToken();
 
   const socket = useMemo(() => {
     if (!token) return null;

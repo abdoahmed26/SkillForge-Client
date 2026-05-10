@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
-import { refreshToken, fetchCurrentUser } from "../store/authSlice";
+import { initializeAuth } from "../store/authSlice";
 
 export function ProtectedRoute() {
   const dispatch = useAppDispatch();
@@ -11,10 +11,7 @@ export function ProtectedRoute() {
 
   useEffect(() => {
     if (!isInitialized && !isLoading) {
-      dispatch(refreshToken())
-        .unwrap()
-        .then(() => dispatch(fetchCurrentUser()))
-        .catch(() => {});
+      dispatch(initializeAuth());
     }
   }, [dispatch, isInitialized, isLoading]);
 

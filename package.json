@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.7.7",
+    "cookie-universal": "^2.2.2",
     "framer-motion": "^12.38.0",
     "i": "^0.3.7",
     "lucide-react": "^0.525.0",

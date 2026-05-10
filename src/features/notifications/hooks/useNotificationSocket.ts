@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { io } from "socket.io-client";
-import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
+import { useAppDispatch } from "../../../hooks/useAppHooks";
+import { getAccessToken } from "../../../utils/cookies";
 import { notificationReceived, unreadCountReceived } from "../store/notificationsSlice";
 import type { AppNotification } from "../types/notification.types";
 
@@ -8,7 +9,7 @@ const socketUrl = import.meta.env.VITE_SOCKET_URL ?? "http://localhost:3000";
 
 export function useNotificationSocket() {
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.accessToken);
+  const token = getAccessToken();
 
   const socket = useMemo(() => (token ? io(`${socketUrl}/notifications`, { auth: { token } }) : null), [token]);
 

@@ -1,8 +1,5 @@
-import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-
-type RetryRequestConfig = InternalAxiosRequestConfig & {
-  _retry?: boolean;
-};
+import axios, { AxiosError } from "axios";
+import { getAccessToken, removeAccessTokenCookie } from "./cookies";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3000/api/v1",
@@ -17,28 +14,24 @@ export const setAccessToken = (accessToken: string | null) => {
   }
 };
 
-const AUTH_ENDPOINTS = ["/auth/login", "/auth/register", "/auth/refresh", "/auth/forgot-password", "/auth/reset-password"];
+// Restore token from cookie on module load
+const savedToken = getAccessToken();
+if (savedToken) {
+  setAccessToken(savedToken);
+}
+
+const AUTH_ENDPOINTS = ["/auth/login", "/auth/register", "/auth/forgot-password", "/auth/reset-password"];
 
 api.interceptors.response.use(
   (response) => response,
-  async (error: AxiosError) => {
-    const originalRequest = error.config as RetryRequestConfig | undefined;
-    const isAuthEndpoint = AUTH_ENDPOINTS.some((ep) => originalRequest?.url?.includes(ep));
+  (error: AxiosError) => {
+    const isAuthEndpoint = AUTH_ENDPOINTS.some((ep) => error.config?.url?.includes(ep));
 
-    if (error.response?.status === 401 && originalRequest && !originalRequest._retry && !isAuthEndpoint) {
-      originalRequest._retry = true;
-
-      try {
-        const { data } = await api.post<{ accessToken: string }>("/auth/refresh");
-        setAccessToken(data.accessToken);
-        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-        return api(originalRequest);
-      } catch (refreshError) {
-        setAccessToken(null);
-        window.dispatchEvent(new Event("auth:expired"));
-        window.location.assign("/#/login");
-        return Promise.reject(refreshError);
-      }
+    if (error.response?.status === 401 && !isAuthEndpoint) {
+      setAccessToken(null);
+      removeAccessTokenCookie();
+      window.dispatchEvent(new Event("auth:expired"));
+      window.location.assign("/#/login");
     }
 
     return Promise.reject(error);

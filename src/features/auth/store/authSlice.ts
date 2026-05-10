@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { api, setAccessToken } from "../../../utils/api";
+import { getAccessToken, setAccessTokenCookie, removeAccessTokenCookie } from "../../../utils/cookies";
 import type {
   ForgotPasswordPayload,
   ForgotPasswordResponse,
@@ -15,7 +16,6 @@ import type { User } from "../types/user.types";
 
 type AuthState = {
   user: User | null;
-  accessToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   isInitialized: boolean;
@@ -24,8 +24,7 @@ type AuthState = {
 
 const initialState: AuthState = {
   user: null,
-  accessToken: null,
-  isAuthenticated: false,
+  isAuthenticated: !!getAccessToken(),
   isLoading: false,
   isInitialized: false,
   error: null,
@@ -46,6 +45,7 @@ export const loginUser = createAsyncThunk<AuthResponse, LoginCredentials, { reje
     try {
       const { data } = await api.post<AuthResponse>("/auth/login", credentials);
       setAccessToken(data.accessToken);
+      setAccessTokenCookie(data.accessToken);
       return data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
@@ -59,6 +59,7 @@ export const registerUser = createAsyncThunk<AuthResponse, RegisterCredentials, 
     try {
       const { data } = await api.post<AuthResponse>("/auth/register", credentials);
       setAccessToken(data.accessToken);
+      setAccessTokenCookie(data.accessToken);
       return data;
     } catch (error) {
       return rejectWithValue(getErrorMessage(error));
@@ -71,23 +72,30 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
   async (_, { rejectWithValue }) => {
     try {
       await api.post("/auth/logout");
-      setAccessToken(null);
     } catch (error) {
-      setAccessToken(null);
       return rejectWithValue(getErrorMessage(error));
+    } finally {
+      setAccessToken(null);
+      removeAccessTokenCookie();
     }
   },
 );
 
-export const refreshToken = createAsyncThunk<{ accessToken: string }, void, { rejectValue: string }>(
-  "auth/refresh",
+export const initializeAuth = createAsyncThunk<User, void, { rejectValue: string }>(
+  "auth/initialize",
   async (_, { rejectWithValue }) => {
+    const token = getAccessToken();
+    if (!token) {
+      return rejectWithValue("No token found");
+    }
+
+    setAccessToken(token);
     try {
-      const { data } = await api.post<{ accessToken: string }>("/auth/refresh");
-      setAccessToken(data.accessToken);
+      const { data } = await api.get<User>("/auth/me");
       return data;
     } catch (error) {
       setAccessToken(null);
+      removeAccessTokenCookie();
       return rejectWithValue(getErrorMessage(error));
     }
   },
@@ -177,13 +185,14 @@ const authSlice = createSlice({
     },
     setCredentials: (state, action: PayloadAction<AuthResponse>) => {
       state.user = action.payload.user;
-      state.accessToken = action.payload.accessToken;
       state.isAuthenticated = true;
       setAccessToken(action.payload.accessToken);
+      setAccessTokenCookie(action.payload.accessToken);
     },
     clearCredentials: () => {
       setAccessToken(null);
-      return initialState;
+      removeAccessTokenCookie();
+      return { ...initialState, isInitialized: true, isAuthenticated: false };
     },
   },
   extraReducers: (builder) => {
@@ -195,8 +204,8 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.accessToken = action.payload.accessToken;
         state.isAuthenticated = true;
+        state.isInitialized = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -209,27 +218,26 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.accessToken = action.payload.accessToken;
         state.isAuthenticated = true;
+        state.isInitialized = true;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? "Unable to register";
       })
-      .addCase(logoutUser.fulfilled, () => initialState)
-      .addCase(logoutUser.rejected, () => initialState)
-      .addCase(refreshToken.pending, (state) => {
+      .addCase(logoutUser.fulfilled, () => ({ ...initialState, isInitialized: true, isAuthenticated: false }))
+      .addCase(logoutUser.rejected, () => ({ ...initialState, isInitialized: true, isAuthenticated: false }))
+      .addCase(initializeAuth.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(refreshToken.fulfilled, (state, action) => {
+      .addCase(initializeAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.accessToken = action.payload.accessToken;
+        state.user = action.payload;
         state.isAuthenticated = true;
         state.isInitialized = true;
       })
-      .addCase(refreshToken.rejected, (state) => {
+      .addCase(initializeAuth.rejected, (state) => {
         state.user = null;
-        state.accessToken = null;
         state.isAuthenticated = false;
         state.isLoading = false;
         state.isInitialized = true;

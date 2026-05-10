@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
+import { getAccessToken } from "../../../utils/cookies";
 import { addInboxRequest, addMatch } from "../store/matchingSlice";
 import type { MatchedUser, MatchRequest } from "../types/matching.types";
 
 export function useMatchingSocket() {
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.accessToken);
+  const token = getAccessToken();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {

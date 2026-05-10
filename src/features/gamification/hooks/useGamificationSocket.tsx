@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
+import { getAccessToken } from "../../../utils/cookies";
 import { BadgeUnlockToast } from "../components/BadgeUnlockToast";
 import { StreakFreezeWarning } from "../components/StreakFreezeWarning";
 import { applyXpGained, markAchievementUnlocked, updateStreak } from "../store/gamificationSlice";
@@ -8,7 +9,7 @@ import type { AchievementUnlockedEvent, StreakUpdatedEvent, StreakWarningEvent, 
 
 export function useGamificationSocket() {
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.accessToken);
+  const token = getAccessToken();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
