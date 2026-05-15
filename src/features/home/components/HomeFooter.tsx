@@ -56,10 +56,10 @@ export function HomeFooter() {
             <div>
               <h3 className="text-[13px] font-bold text-slate-300 mb-6 tracking-wide font-heading uppercase">Stay Connected</h3>
               <div className="flex gap-3">
-                <a href="#" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Twitter className="h-4 w-4" /></a>
-                <a href="#" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Linkedin className="h-4 w-4" /></a>
-                <a href="#" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Github className="h-4 w-4" /></a>
-                <a href="#" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><MessageCircle className="h-4 w-4" /></a>
+                <a href="https://www.facebook.com/profile.php?id=100029822832042" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Twitter className="h-4 w-4" /></a>
+                <a href="https://linkedin.com/in/abdelrahman-ahmed-460873357" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Linkedin className="h-4 w-4" /></a>
+                <a href="https://github.com/abdoahmed26" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><Github className="h-4 w-4" /></a>
+                <a href="https://wa.me/+0201207583096" className="w-8 h-8 rounded-full bg-slate-800/50 border border-slate-700/50 flex items-center justify-center text-slate-400 hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors"><MessageCircle className="h-4 w-4" /></a>
               </div>
             </div>
           </div>

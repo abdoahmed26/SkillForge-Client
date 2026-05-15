@@ -8,6 +8,7 @@ import { AnimatedSection } from "../../../components/common/AnimatedSection";
 import { GradientButton } from "../../../components/common/GradientButton";
 import { MotionCard } from "../../../components/common/MotionCard";
 import homeImage from "../../../assets/home-image.png";
+import { sendContact } from "../api/contact";
 
 export function HowItWorks() {
   return (
@@ -295,26 +296,26 @@ export function ContactUs() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={(e) => sendContact(e)}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-slate-300 mb-2">First Name</label>
-                  <input type="text" id="firstName" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="John" />
+                  <input type="text" name="firstName" required id="firstName" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="John" />
                 </div>
                 <div>
                   <label htmlFor="lastName" className="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
-                  <input type="text" id="lastName" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="Doe" />
+                  <input type="text" name="lastName" required id="lastName" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="Doe" />
                 </div>
               </div>
               
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
-                <input type="email" id="email" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="john@example.com" />
+                <input type="email" name="email" required id="email" className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all" placeholder="john@example.com" />
               </div>
               
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
-                <textarea id="message" rows={4} className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none" placeholder="How can we help you?"></textarea>
+                <textarea name="message" id="message" required rows={4} className="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none" placeholder="How can we help you?"></textarea>
               </div>
               
               <GradientButton variant="primary" className="w-full flex justify-center py-3.5">
