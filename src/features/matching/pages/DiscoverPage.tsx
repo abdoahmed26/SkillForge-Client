@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { AnimatedPage } from "../../../components/common/AnimatedPage";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
@@ -56,7 +57,7 @@ export function DiscoverPage() {
   };
 
   return (
-    <section>
+    <AnimatedPage>
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-bold uppercase tracking-wider text-indigo-300">Smart Matching</p>
@@ -104,6 +105,6 @@ export function DiscoverPage() {
             : null
         }
       />
-    </section>
+    </AnimatedPage>
   );
 }

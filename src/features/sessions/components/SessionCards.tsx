@@ -95,9 +95,9 @@ export function SessionCard({
 
   return (
     <motion.article
-      whileHover={{ y: -4 }}
-      className={`glass-dark relative overflow-visible rounded-lg p-5 transition-all hover:shadow-glow ${
-        isNext ? "border-indigo-400/50" : ""
+      whileHover={{ y: -5 }}
+      className={`glass-dark relative overflow-visible rounded-[2rem] p-6 transition-all hover:shadow-glow ${
+        isNext ? "border-indigo-500/50" : ""
       }`}
     >
       <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-teal-400/10 blur-3xl" />
@@ -199,7 +199,7 @@ export function HistorySessionCard({ session }: { session: Session }) {
     <motion.article
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-dark relative overflow-hidden rounded-lg p-5"
+      className="glass-dark relative overflow-hidden rounded-2xl p-5"
     >
       <div className={`absolute -right-16 -top-16 h-40 w-40 rounded-full ${isMissed ? "bg-red-500/10" : "bg-teal-400/10"} blur-3xl`} />
       <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -270,7 +270,7 @@ export function CancelSessionModal({
           <motion.div
             role="dialog"
             aria-modal="true"
-            className="glass-dark relative w-full max-w-lg overflow-hidden rounded-lg p-5"
+            className="glass-dark relative w-full max-w-lg overflow-hidden rounded-[2rem] p-6 shadow-soft"
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
@@ -356,7 +356,7 @@ export function RejectRequestModal({
           <motion.div
             role="dialog"
             aria-modal="true"
-            className="glass-dark relative w-full max-w-lg overflow-hidden rounded-lg p-5"
+            className="glass-dark relative w-full max-w-lg overflow-hidden rounded-[2rem] p-6 shadow-soft"
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
@@ -422,7 +422,7 @@ export function CancelledSessionCard({ session }: { session: Session }) {
     <motion.article
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-dark relative overflow-hidden rounded-lg p-5"
+      className="glass-dark relative overflow-hidden rounded-2xl p-5"
     >
       <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-red-500/10 blur-3xl" />
       <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -455,7 +455,7 @@ export function RejectedSessionCard({ session }: { session: Session }) {
     <motion.article
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-dark relative overflow-hidden rounded-lg p-5"
+      className="glass-dark relative overflow-hidden rounded-2xl p-5"
     >
       <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-orange-500/10 blur-3xl" />
       <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -501,7 +501,7 @@ export function RequestCard({
     <motion.article
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-dark relative overflow-hidden rounded-lg p-5"
+      className="glass-dark relative overflow-hidden rounded-2xl p-5"
     >
       <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-indigo-500/10 blur-3xl" />
       <div className="relative flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">

@@ -9,7 +9,7 @@ import { useGamificationSocket } from "../features/gamification/hooks/useGamific
 import { StreakCounter } from "../features/gamification/components/StreakCounter";
 import { loadGamificationProfile } from "../features/gamification/store/gamificationSlice";
 import { PageTransition } from "../components/common/PageTransition";
-import { ThemeToggle } from "../components/common/ThemeToggle";
+// import { ThemeToggle } from "../components/common/ThemeToggle";
 import { NotificationBell } from "../features/notifications/components/NotificationBell";
 import logoIcon from "../assets/icon.png";
 
@@ -71,13 +71,15 @@ export function AppLayout() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200">
       <div className="fixed inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-900/40 via-slate-950 to-slate-950" />
+      <div className="pointer-events-none fixed left-1/4 top-1/4 z-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 animate-pulse-slow rounded-full bg-indigo-600/20 blur-[100px]" />
+      <div className="pointer-events-none fixed bottom-1/4 right-0 z-0 h-[400px] w-[400px] translate-y-1/2 animate-pulse-slow rounded-full bg-teal-500/10 blur-[100px]" />
 
       <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-900/95 shadow-[0_8px_32px_0_rgba(0,0,0,0.22)]">
         <nav className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/dashboard" className="flex items-center gap-3 transition-opacity hover:opacity-80">
             <img src={logoIcon} alt="SkillForge Logo" className="h-8 w-auto object-contain" />
             <span className="text-2xl font-bold tracking-tight text-white">
-              Skill<span className="text-emerald-500">Forge</span>
+              Skill<span className="text-teal-500">Forge</span>
             </span>
           </Link>
 
@@ -220,9 +222,9 @@ export function AppLayout() {
                 <LogOut className="h-4 w-4" aria-hidden="true" />
                 Logout
               </button>
-              <div className="mt-2 px-1 sm:hidden">
+              {/* <div className="mt-2 px-1 sm:hidden">
                 <ThemeToggle />
-              </div>
+              </div> */}
             </div>
           ) : null}
         </nav>

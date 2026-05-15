@@ -18,6 +18,9 @@ import type { LucideIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { AnimatedPage } from "../../../components/common/AnimatedPage";
+import { GradientButton } from "../../../components/common/GradientButton";
+import { MotionCard } from "../../../components/common/MotionCard";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppHooks";
 import { loadAnalyticsDashboard } from "../../analytics/store/analyticsSlice";
 import { loadGamificationProfile } from "../../gamification/store/gamificationSlice";
@@ -45,25 +48,25 @@ type DashboardCard = {
 function MetricCard({ card, index }: { card: DashboardCard; index: number }) {
   const Icon = card.icon;
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
+    <MotionCard
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04 }}
-      className="glass-dark group relative overflow-hidden rounded-lg p-5 transition-all hover:-translate-y-1 hover:shadow-glow"
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      className="group"
     >
       <Link to={card.to} className="absolute inset-0 z-10" aria-label={card.title} />
-      <div className={`absolute -right-12 -top-12 h-32 w-32 rounded-full ${card.tone} opacity-20 blur-3xl transition group-hover:opacity-35`} />
+      <div className={`absolute -right-12 -top-12 h-32 w-32 rounded-full ${card.tone} opacity-20 blur-3xl transition group-hover:opacity-40 animate-pulse-slow`} />
       <div className="relative flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-bold text-slate-400">{card.title}</p>
-          <p className="mt-2 font-heading text-3xl font-black text-white">{card.value}</p>
+          <p className="text-sm font-semibold text-slate-400 uppercase tracking-wider">{card.title}</p>
+          <p className="mt-2 font-heading text-4xl font-bold text-white">{card.value}</p>
           <p className="mt-1 text-xs font-semibold text-slate-500">{card.detail}</p>
         </div>
-        <div className="grid h-11 w-11 place-items-center rounded-lg bg-slate-800/70 text-teal-300">
-          <Icon className="h-5 w-5" aria-hidden />
+        <div className="grid h-12 w-12 place-items-center rounded-xl bg-slate-800/70 text-teal-400 border border-slate-700/50 shadow-soft">
+          <Icon className="h-6 w-6" aria-hidden />
         </div>
       </div>
-    </motion.article>
+    </MotionCard>
   );
 }
 
@@ -152,7 +155,7 @@ export function DashboardPage() {
   ];
 
   return (
-    <section className="space-y-8">
+    <AnimatedPage className="space-y-8">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -160,9 +163,9 @@ export function DashboardPage() {
       >
         <div>
           <p className="text-sm font-bold uppercase tracking-wider text-teal-300">Dashboard</p>
-          <h1 className="mt-2 font-heading text-4xl font-black text-white">
+          <h1 className="mt-2 font-heading text-4xl font-bold text-white">
             Welcome back,{" "}
-            <span className="bg-gradient-to-r from-indigo-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-indigo-500 to-teal-400 bg-clip-text text-transparent">
               {name}
             </span>
           </h1>
@@ -189,12 +192,12 @@ export function DashboardPage() {
         <motion.article
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-dark rounded-lg p-5"
+          className="glass-dark rounded-2xl p-5"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-sm font-bold uppercase tracking-wider text-indigo-300">Next Session</p>
-              <h2 className="mt-1 font-heading text-2xl font-black text-white">
+              <h2 className="mt-1 font-heading text-2xl font-bold text-white">
                 {nextSession ? nextSession.skill.name : "No session scheduled"}
               </h2>
               <p className="mt-2 text-sm text-slate-400">
@@ -211,12 +214,11 @@ export function DashboardPage() {
             ) : null}
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link
-              to="/my-sessions"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-4 py-3 text-sm font-bold text-white shadow-glow transition hover:opacity-90"
-            >
-              Open sessions
-              <ChevronRight className="h-4 w-4" aria-hidden />
+            <Link to="/my-sessions">
+              <GradientButton variant="primary" className="text-sm">
+                Open sessions
+                <ChevronRight className="h-4 w-4" aria-hidden />
+              </GradientButton>
             </Link>
             <Link
               to="/my-matches"
@@ -231,7 +233,7 @@ export function DashboardPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.04 }}
-          className="glass-dark rounded-lg p-5"
+          className="glass-dark rounded-2xl p-5"
         >
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -263,7 +265,7 @@ export function DashboardPage() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <section className="glass-dark rounded-lg p-5">
+        <section className="glass-dark rounded-2xl p-5">
           <h2 className="font-heading text-xl font-bold text-white">Skill Mix</h2>
           <div className="mt-5 space-y-4">
             <div>
@@ -290,7 +292,7 @@ export function DashboardPage() {
           </Link>
         </section>
 
-        <section className="glass-dark rounded-lg p-5">
+        <section className="glass-dark rounded-2xl p-5">
           <h2 className="font-heading text-xl font-bold text-white">Quick Actions</h2>
           <div className="mt-4 space-y-2">
             {quickActions.map((action) => (
@@ -309,7 +311,7 @@ export function DashboardPage() {
           </div>
         </section>
 
-        <section className="glass-dark rounded-lg p-5">
+        <section className="glass-dark rounded-2xl p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-heading text-xl font-bold text-white">Notifications</h2>
             <span className="rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-bold text-indigo-100">
@@ -342,7 +344,7 @@ export function DashboardPage() {
           { label: "Completion", value: `${Math.round((analytics?.stats.completionRate ?? 0) * 100)}%`, icon: BarChart3, to: "/analytics" },
           { label: "Unread", value: unreadCount, icon: Bell, to: "/dashboard" },
         ].map((item) => (
-          <Link key={item.label} to={item.to} className="glass-dark flex items-center justify-between rounded-lg p-4 transition hover:-translate-y-1 hover:shadow-glow">
+          <Link key={item.label} to={item.to} className="glass-dark flex items-center justify-between rounded-2xl p-4 transition hover:-translate-y-1 hover:shadow-glow">
             <div>
               <p className="text-sm font-bold text-slate-400">{item.label}</p>
               <p className="mt-1 font-heading text-2xl font-black text-white">{item.value}</p>
@@ -351,6 +353,6 @@ export function DashboardPage() {
           </Link>
         ))}
       </section>
-    </section>
+    </AnimatedPage>
   );
 }

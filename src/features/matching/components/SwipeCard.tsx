@@ -38,7 +38,7 @@ export function SwipeCard({ candidate, onSwipeRight, onSwipeLeft, onViewProfile,
       className="glass-dark absolute inset-0 cursor-grab overflow-hidden rounded-2xl p-5 shadow-glow active:cursor-grabbing"
     >
       <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-teal-400/10 blur-3xl" />
-      <motion.div style={{ opacity: likeOpacity }} className="absolute right-6 top-8 rotate-12 rounded-lg border-4 border-emerald-400 px-4 py-2 text-2xl font-black text-emerald-300">
+      <motion.div style={{ opacity: likeOpacity }} className="absolute right-6 top-8 rotate-12 rounded-lg border-4 border-teal-400 px-4 py-2 text-2xl font-black text-teal-300">
         LIKE
       </motion.div>
       <motion.div style={{ opacity: skipOpacity }} className="absolute left-6 top-8 -rotate-12 rounded-lg border-4 border-red-400 px-4 py-2 text-2xl font-black text-red-300">
@@ -60,15 +60,17 @@ export function SwipeCard({ candidate, onSwipeRight, onSwipeLeft, onViewProfile,
           <CompatibilityBadge score={candidate.compatibilityScore} />
         </div>
         {isTop ? (
-          <button
-            type="button"
-            onPointerDown={(event) => event.stopPropagation()}
-            onClick={onViewProfile}
-            className="mx-auto mb-5 inline-flex items-center justify-center gap-2 rounded-xl border border-indigo-300/30 bg-indigo-500/10 px-4 py-2 text-sm font-bold text-indigo-100 transition hover:bg-indigo-500/20"
-          >
-            <Eye className="h-4 w-4" aria-hidden="true" />
-            View profile & reviews
-          </button>
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mx-auto mb-5">
+            <button
+              type="button"
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={onViewProfile}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-indigo-300/30 bg-indigo-500/10 px-4 py-2 text-sm font-bold text-indigo-100 transition hover:bg-indigo-500/20 shadow-soft"
+            >
+              <Eye className="h-4 w-4" aria-hidden="true" />
+              View profile & reviews
+            </button>
+          </motion.div>
         ) : null}
         <SkillOverlapDisplay canTeachMe={candidate.canTeachMe} canLearnFromMe={candidate.canLearnFromMe} />
       </div>

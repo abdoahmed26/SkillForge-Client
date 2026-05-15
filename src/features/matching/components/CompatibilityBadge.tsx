@@ -14,7 +14,7 @@ export function CompatibilityBadge({ score, size = "md" }: CompatibilityBadgePro
   const circumference = 2 * Math.PI * radius;
   const progress = circumference - (score / 100) * circumference;
   const color =
-    score > 70 ? "stroke-emerald-400 text-emerald-300" : score >= 40 ? "stroke-amber-300 text-amber-200" : "stroke-orange-400 text-orange-300";
+    score > 70 ? "stroke-teal-400 text-teal-300" : score >= 40 ? "stroke-amber-300 text-amber-200" : "stroke-orange-400 text-orange-300";
 
   return (
     <div className={`relative shrink-0 ${sizes[size]}`}>

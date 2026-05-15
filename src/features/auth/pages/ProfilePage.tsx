@@ -10,6 +10,8 @@ import { updateProfile, uploadAvatar } from "../store/authSlice";
 import { Camera } from "lucide-react";
 import { ReviewList } from "../../reviews/components/ReviewList";
 import { loadUserReviews } from "../../reviews/store/reviewsSlice";
+import { AnimatedPage } from "../../../components/common/AnimatedPage";
+import { GradientButton } from "../../../components/common/GradientButton";
 
 const profileSchema = z.object({
   displayName: z.string().max(100, "Display name must be 100 characters or fewer").optional(),
@@ -57,13 +59,11 @@ export function ProfilePage() {
   };
 
   return (
-    <>
+    <AnimatedPage className="space-y-8">
       <motion.section 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
         className="grid gap-8 lg:grid-cols-[300px_1fr]"
       >
-        <aside className="rounded-2xl border border-white/10 glass-dark p-8 shadow-xl">
+        <aside className="rounded-[2rem] border border-white/10 glass-dark p-8 shadow-soft">
           <div className="relative mx-auto h-36 w-36">
             {user?.avatarUrl ? (
               <img src={user.avatarUrl} alt={user.username} className="h-full w-full rounded-full object-cover shadow-md ring-4 ring-slate-800" />
@@ -102,7 +102,7 @@ export function ProfilePage() {
             </p>
           </div>
         </aside>
-        <form className="rounded-2xl border border-white/10 glass-dark p-8 shadow-xl" onSubmit={handleSubmit(onSubmit)}>
+        <form className="rounded-[2rem] border border-white/10 glass-dark p-8 shadow-soft" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="text-2xl font-bold text-white">Profile Settings</h1>
           <p className="mt-1 text-sm text-slate-400">Update your personal information and bio.</p>
           
@@ -143,15 +143,13 @@ export function ProfilePage() {
           {error && <p className="mt-6 rounded-lg bg-red-500/10 border border-red-500/20 p-4 text-sm font-medium text-red-400">{error}</p>}
           
           <div className="mt-8 flex justify-end">
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <GradientButton 
+              variant="primary"
               type="submit" 
               disabled={isLoading} 
-              className="rounded-xl bg-gradient-to-r from-indigo-500 to-teal-400 px-6 py-2.5 font-semibold text-white shadow-glow transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Saving..." : "Save Changes"}
-            </motion.button>
+            </GradientButton>
           </div>
         </form>
         <div className="lg:col-span-2">
@@ -165,6 +163,6 @@ export function ProfilePage() {
           <ReviewList response={reviewResponse} isLoading={isReviewsLoading} />
         </div>
       </motion.section>
-    </>
+    </AnimatedPage>
   );
 }

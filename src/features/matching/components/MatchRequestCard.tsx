@@ -20,7 +20,7 @@ export function MatchRequestCard({ request, onAccept, onDecline }: MatchRequestC
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: 80 }}
       whileHover={{ y: -4 }}
-      className="glass-dark relative overflow-hidden rounded-lg p-5"
+      className="glass-dark relative overflow-hidden rounded-[2rem] p-6 shadow-soft"
     >
       <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-indigo-500/10 blur-3xl" />
       <div className="relative flex flex-col gap-5 md:flex-row md:items-center">
@@ -43,7 +43,7 @@ export function MatchRequestCard({ request, onAccept, onDecline }: MatchRequestC
           <SkillOverlapDisplay canTeachMe={request.canTeachMe} canLearnFromMe={request.canLearnFromMe} compact />
         </div>
         <div className="flex gap-3 md:flex-col">
-          <button type="button" onClick={onAccept} className="inline-flex items-center gap-2 rounded-xl bg-emerald-500/15 px-4 py-2 text-sm font-bold text-emerald-200 transition hover:bg-emerald-500/25">
+          <button type="button" onClick={onAccept} className="inline-flex items-center gap-2 rounded-xl bg-teal-500/15 px-4 py-2 text-sm font-bold text-teal-200 transition hover:bg-teal-500/25">
             <Check className="h-4 w-4" /> Accept
           </button>
           <button type="button" onClick={onDecline} className="inline-flex items-center gap-2 rounded-xl bg-red-500/15 px-4 py-2 text-sm font-bold text-red-200 transition hover:bg-red-500/25">

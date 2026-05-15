@@ -9,7 +9,7 @@ export function NotificationDropdown() {
   const { items, isLoading } = useAppSelector((state) => state.notifications);
 
   return (
-    <div className="glass-dark absolute right-0 top-12 z-50 w-[min(22rem,calc(100vw-2rem))] rounded-lg p-3 shadow-glow">
+    <div className="glass-dark fixed left-4 right-4 top-[4.5rem] z-50 sm:absolute sm:left-auto sm:right-0 sm:top-12 sm:w-[22rem] rounded-lg p-3 shadow-glow">
       <div className="mb-2 flex items-center justify-between gap-3">
         <h2 className="font-heading text-sm font-bold text-white">Notifications</h2>
         <button type="button" onClick={() => void dispatch(readAllNotifications())} className="text-xs font-bold text-teal-300 hover:text-teal-200">
